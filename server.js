@@ -25,7 +25,7 @@ const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 // Verbose logging: reasoning payload per fallback attempt, full request/error bodies on failure.
 const DEBUG_MODE = process.env.DEBUG_MODE === 'true';
 
-const MAX_TOKENS_LIMIT = 65536;
+const MAX_TOKENS_LIMIT = 100000;
 
 // Shared keep-alive agent for connection reuse on long-lived deployments.
 const keepAliveAgent = new https.Agent({
@@ -105,8 +105,8 @@ const FALLBACK_MODELS = [
 // ─── Middleware ─────────────────────────────────────────────────────────
 
 app.use(cors());
-app.use(express.json({ limit: '100mb' }));
-app.use(express.urlencoded({ limit: '100mb', extended: true }));
+app.use(express.json({ limit: '400mb' }));
+app.use(express.urlencoded({ limit: '400mb', extended: true }));
 
 // Malformed JSON body -> clean OpenAI-style error instead of Express's default HTML error page.
 app.use((err, req, res, next) => {
